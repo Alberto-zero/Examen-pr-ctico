@@ -3,7 +3,7 @@ import json
 
 def procesar_y_generar():
     archivo_csv = 'afluenciamb_simple_03_2026.csv'
-    archivo_html = 'pagina.html'
+    archivo_html = 'index.html'
 
     try:
         df = pd.read_csv(archivo_csv)
