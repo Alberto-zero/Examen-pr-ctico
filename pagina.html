@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <title>Estadísticas Metrobús - Azul Rey</title>
+    <meta charset='utf-8'>
+    <link rel='stylesheet' href='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css'>
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css'>
+    <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js'></script>
+    <style>
+        body { background-color: #f8f9fa; font-family: sans-serif; }
+        .bg-azul-rey { background-color: #002366 !important; color: white; }
+        .card { border: none; box-shadow: 0 2px 10px rgba(0,0,0,0.1); margin-bottom: 25px; }
+        .card-header { background-color: #002366; color: white; font-weight: bold; }
+        .stat-box { background: #002366; color: white; padding: 20px; border-radius: 10px; text-align: center; }
+        .stat-label { font-size: 0.9rem; text-transform: uppercase; opacity: 0.8; }
+        .stat-value { font-size: 1.6rem; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-dark bg-azul-rey mb-4">
+        <span class="navbar-brand mb-0 h1">Análisis de Afluencia Metrobús</span>
+    </nav>
+
+    <div class="container">
+        <div class="row mb-4">
+            <div class="col-md-4">
+                <div class="stat-box">
+                    <div class="stat-label">Media</div>
+                    <div class="stat-value">166,684.69</div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="stat-box">
+                    <div class="stat-label">Mediana</div>
+                    <div class="stat-value">136,400</div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="stat-box">
+                    <div class="stat-label">Moda</div>
+                    <div class="stat-value">61,582</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">Frecuencias Absolutas (Barras)</div>
+                    <div class="card-body">
+                        <div id="chart_barras" style="height: 250px;"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">Frecuencias Relativas (Pastel)</div>
+                    <div class="card-body">
+                        <div id="chart_pastel" style="height: 250px;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">Polígono de Frecuencias (Acumulada)</div>
+                    <div class="card-body">
+                        <div id="chart_poligono" style="height: 300px;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        Morris.Bar({
+            element: 'chart_barras',
+            data: [{"linea": "Línea 1", "valor": 2313822911.0}, {"linea": "Línea 2", "valor": 845821397.0}, {"linea": "Línea 3", "valor": 675294416.0}, {"linea": "Línea 6", "valor": 526449987.0}, {"linea": "Línea 5", "valor": 506153781.0}, {"linea": "Línea 4", "valor": 293230975.49458}, {"linea": "Línea 7", "valor": 280019823.0}, {"linea": "linea 1", "valor": 140525047.0}, {"linea": "linea 5", "valor": 83486200.0}, {"linea": "linea 2", "valor": 72576189.0}, {"linea": "linea 6", "valor": 62803493.0}, {"linea": "linea 3", "valor": 57890732.0}, {"linea": "linea 7", "valor": 47301019.0}, {"linea": "linea 4", "valor": 37100083.0}],
+            xkey: 'linea',
+            ykeys: ['valor'],
+            labels: ['Pasajeros'],
+            barColors: ['#002366'],
+            hideHover: 'auto'
+        });
+
+        Morris.Donut({
+            element: 'chart_pastel',
+            data: [{"label": "Línea 1", "value": 38.94}, {"label": "Línea 2", "value": 14.23}, {"label": "Línea 3", "value": 11.36}, {"label": "Línea 6", "value": 8.86}, {"label": "Línea 5", "value": 8.52}, {"label": "Línea 4", "value": 4.93}, {"label": "Línea 7", "value": 4.71}, {"label": "linea 1", "value": 2.36}, {"label": "linea 5", "value": 1.4}, {"label": "linea 2", "value": 1.22}, {"label": "linea 6", "value": 1.06}, {"label": "linea 3", "value": 0.97}, {"label": "linea 7", "value": 0.8}, {"label": "linea 4", "value": 0.62}],
+            colors: ['#002366', '#0047AB', '#4169E1', '#6495ED', '#1E90FF'],
+            formatter: function (x) { return x + "%" }
+        });
+
+        Morris.Area({
+            element: 'chart_poligono',
+            data: [{"linea": "Línea 1", "acumulada": 2313822911.0}, {"linea": "Línea 2", "acumulada": 3159644308.0}, {"linea": "Línea 3", "acumulada": 3834938724.0}, {"linea": "Línea 6", "acumulada": 4361388711.0}, {"linea": "Línea 5", "acumulada": 4867542492.0}, {"linea": "Línea 4", "acumulada": 5160773467.49458}, {"linea": "Línea 7", "acumulada": 5440793290.49458}, {"linea": "linea 1", "acumulada": 5581318337.49458}, {"linea": "linea 5", "acumulada": 5664804537.49458}, {"linea": "linea 2", "acumulada": 5737380726.49458}, {"linea": "linea 6", "acumulada": 5800184219.49458}, {"linea": "linea 3", "acumulada": 5858074951.49458}, {"linea": "linea 7", "acumulada": 5905375970.49458}, {"linea": "linea 4", "acumulada": 5942476053.49458}],
+            xkey: 'linea',
+            ykeys: ['acumulada'],
+            labels: ['Acumulado'],
+            lineColors: ['#002366'],
+            fillOpacity: 0.3,
+            parseTime: false,
+            behaveLikeLine: true
+        });
+    </script>
+</body>
+</html>
